@@ -75,7 +75,7 @@ extern "C" {
 //! \brief Defines the full scale frequency for IQ variable, Hz
 //! \brief All frequencies are converted into (pu) based on the ratio to this value
 //! \brief this value MUST be larger than the maximum speed that you are expecting from the motor 
-#define USER_IQ_FULL_SCALE_FREQ_Hz        (800.0)   // 800 Example with buffer for 8-pole 6 KRPM motor to be run to 10 KRPM with field weakening; Hz =(RPM * Poles) / 120
+#define USER_IQ_FULL_SCALE_FREQ_Hz        (1283.3)   // 800 Example with buffer for 8-pole 6 KRPM motor to be run to 10 KRPM with field weakening; Hz =(RPM * Poles) / 120
 
 //! \brief Defines full scale value for the IQ30 variable of Voltage inside the system
 //! \brief All voltages are converted into (pu) based on the ratio to this value
@@ -85,7 +85,7 @@ extern "C" {
 //! \brief WARNING: if you know the value of your Bemf constant, and you know you are operating at a multiple speed due to field weakening, be sure to set this value higher than the expected Bemf voltage
 //! \brief It is recommended to start with a value ~3x greater than the USER_ADC_FULL_SCALE_VOLTAGE_V and increase to 4-5x if scenarios where a Bemf calculation may exceed these limits
 //! \brief This value is also used to calculate the minimum flux value: USER_IQ_FULL_SCALE_VOLTAGE_V/USER_EST_FREQ_Hz/0.7
-#define USER_IQ_FULL_SCALE_VOLTAGE_V      (24.0)   // 24.0 Example for boostxldrv8301_revB typical usage and the Anaheim motor
+#define USER_IQ_FULL_SCALE_VOLTAGE_V      (12.0)   // 24.0 Example for boostxldrv8301_revB typical usage and the Anaheim motor; according to excel should be 12!!
 
 //! \brief Defines the maximum voltage at the input to the AD converter
 //! \brief The value that will be represented by the maximum ADC input (3.3V) and conversion (0FFFh)
@@ -99,7 +99,7 @@ extern "C" {
 //! \brief Defines the full scale current for the IQ variables, A
 //! \brief All currents are converted into (pu) based on the ratio to this value
 //! \brief WARNING: this value MUST be larger than the maximum current readings that you are expecting from the motor or the reading will roll over to 0, creating a control issue 
-#define USER_IQ_FULL_SCALE_CURRENT_A         (20.0) // 20.0 Example for boostxldrv8301_revB typical usage
+#define USER_IQ_FULL_SCALE_CURRENT_A         (18.0) // 20.0 Example for boostxldrv8301_revB typical usage; according to excel should be 18!!!
 
 //! \brief Defines the maximum current at the AD converter
 //! \brief The value that will be represented by the maximum ADC input (3.3V) and conversion (0FFFh)
@@ -259,7 +259,7 @@ extern "C" {
 
 //! \brief Defines maximum acceleration for the estimation speed profiles, Hz/s
 //! \brief Only used during Motor ID (commission)
-#define USER_MAX_ACCEL_EST_Hzps           (5.0)         // 5.0 Default, don't change
+#define USER_MAX_ACCEL_EST_Hzps           (5.0)         // 5.0 Default, don't change; according to excel should be 16!!!
 
 //! \brief Defines the maximum current slope for Id trajectory during estimation
 #define USER_MAX_CURRENT_SLOPE           (USER_MOTOR_RES_EST_CURRENT/USER_IQ_FULL_SCALE_CURRENT_A/USER_TRAJ_FREQ_Hz)      // USER_MOTOR_RES_EST_CURRENT/USER_IQ_FULL_SCALE_CURRENT_A/USER_TRAJ_FREQ_Hz Default, don't change
@@ -346,6 +346,7 @@ extern "C" {
 #define Bodine_34B3FEBL             114
 #define Pittman_elcom_5233B599      115
 #define medical_instrument          117
+#define Suppo_B2208_17              118
 
 // IPM motors
 // If user provides separate Ls-d, Ls-q
@@ -361,7 +362,7 @@ extern "C" {
 //! \brief These motor ID settings and motor parameters are then available to be used by the control system
 //! \brief Once your ideal settings and parameters are identified update the motor section here so it is available in the binary code
 //#define USER_MOTOR Estun_EMJ_04APB22
-#define USER_MOTOR Anaheim_BLY172S
+//#define USER_MOTOR Anaheim_BLY172S
 //#define USER_MOTOR hobby_3p5T
 //#define USER_MOTOR hobby_4p5T
 //#define USER_MOTOR My_Motor
@@ -376,7 +377,7 @@ extern "C" {
 //#define USER_MOTOR medical_instrument
 //#define USER_MOTOR Kinetek_YDQ1p3_4
 //#define USER_MOTOR LPKF_CAD_CAM
-
+#define USER_MOTOR Suppo_B2208_17
 
 #if (USER_MOTOR == Estun_EMJ_04APB22)                  // Name must match the motor #define
 #define USER_MOTOR_TYPE                 MOTOR_Type_Pm  // Motor_Type_Pm (All Synchronous: BLDC, PMSM, SMPM, IPM) or Motor_Type_Induction (Asynchronous ACI)
@@ -390,7 +391,7 @@ extern "C" {
 #define USER_MOTOR_RES_EST_CURRENT      (1.0)          // During Motor ID, maximum current (Amperes, float) used for Rs estimation, 10-20% rated current
 #define USER_MOTOR_IND_EST_CURRENT      (-1.0)         // During Motor ID, maximum current (negative Amperes, float) used for Ls estimation, use just enough to enable rotation
 #define USER_MOTOR_MAX_CURRENT          (3.82)         // CRITICAL: Used during ID and run-time, sets a limit on the maximum current command output of the provided Speed PI Controller to the Iq controller
-#define USER_MOTOR_FLUX_EST_FREQ_Hz     (20.0)         // During Motor ID, maximum commanded speed (Hz, float), ~10% rated
+#define USER_MOTOR_FLUX_EST_FREQ_Hz     (117.0)         // During Motor ID, maximum commanded speed (Hz, float), ~10% rated
 
 #elif (USER_MOTOR == Anaheim_BLY172S)
 #define USER_MOTOR_TYPE                 MOTOR_Type_Pm
@@ -416,6 +417,27 @@ extern "C" {
 #define USER_MOTOR_FREQ_MAX				(120.0)			// Hz - suggested to set to 120% of rated motor frequency
 #define USER_MOTOR_VOLT_MIN				(3.0)			// Volt - suggested to set to 15% of rated motor voltage
 #define USER_MOTOR_VOLT_MAX				(18.0)			// Volt - suggested to set to 100% of rated motor voltage
+
+//-------------- Start Suppo_B2208_17 ------------------------
+#elif (USER_MOTOR == Suppo_B2208_17)
+#define USER_MOTOR_TYPE                 MOTOR_Type_Pm
+#define USER_MOTOR_NUM_POLE_PAIRS       (7)
+#define USER_MOTOR_Rr                   (NULL)
+#define USER_MOTOR_Rs                   (0.225)        // update after Motor ID
+#define USER_MOTOR_Ls_d                 (NULL)         // update after Motor ID
+#define USER_MOTOR_Ls_q                 (NULL)         // update after Motor ID
+#define USER_MOTOR_RATED_FLUX           (NULL)         // update after Motor ID
+#define USER_MOTOR_MAGNETIZING_CURRENT  (NULL)
+#define USER_MOTOR_RES_EST_CURRENT      (0.5)           //~10% of rated current
+#define USER_MOTOR_IND_EST_CURRENT      (-5.0)          //~10% of rated current; absolute value can be reduced if having trouble identifying a correct Ls
+#define USER_MOTOR_MAX_CURRENT          (7.5)           // peak current
+#define USER_MOTOR_FLUX_EST_FREQ_Hz     (117.0)         // ~10% of rated max speed - check excel
+#define USER_MOTOR_FREQ_LOW				(10.0)			// Hz - suggested to set to 10% of rated motor frequency
+#define USER_MOTOR_FREQ_HIGH			(100.0)			// Hz - suggested to set to 100% of rated motor frequency
+#define USER_MOTOR_FREQ_MAX				(120.0)			// Hz - suggested to set to 120% of rated motor frequency
+#define USER_MOTOR_VOLT_MIN				(3.0)			// Volt - suggested to set to 15% of rated motor voltage
+#define USER_MOTOR_VOLT_MAX				(12.0)			// Volt - suggested to set to 100% of rated motor voltage
+//----------------- end Suppo_B2208_17 ------------------
 
 #elif (USER_MOTOR == small_hobby)
 #define USER_MOTOR_TYPE                 MOTOR_Type_Pm
