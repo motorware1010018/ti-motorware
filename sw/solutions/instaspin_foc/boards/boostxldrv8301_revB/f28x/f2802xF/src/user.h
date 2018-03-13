@@ -85,7 +85,7 @@ extern "C" {
 //! \brief WARNING: if you know the value of your Bemf constant, and you know you are operating at a multiple speed due to field weakening, be sure to set this value higher than the expected Bemf voltage
 //! \brief It is recommended to start with a value ~3x greater than the USER_ADC_FULL_SCALE_VOLTAGE_V and increase to 4-5x if scenarios where a Bemf calculation may exceed these limits
 //! \brief This value is also used to calculate the minimum flux value: USER_IQ_FULL_SCALE_VOLTAGE_V/USER_EST_FREQ_Hz/0.7
-#define USER_IQ_FULL_SCALE_VOLTAGE_V      (12.0)   // 24.0 Example for boostxldrv8301_revB typical usage and the Anaheim motor; according to excel should be 12!!
+#define USER_IQ_FULL_SCALE_VOLTAGE_V      (18.0)   // 24.0 Example for boostxldrv8301_revB typical usage and the Anaheim motor; according to excel should be 18!!
 
 //! \brief Defines the maximum voltage at the input to the AD converter
 //! \brief The value that will be represented by the maximum ADC input (3.3V) and conversion (0FFFh)
@@ -429,14 +429,14 @@ extern "C" {
 #define USER_MOTOR_RATED_FLUX           (NULL)         // update after Motor ID
 #define USER_MOTOR_MAGNETIZING_CURRENT  (NULL)
 #define USER_MOTOR_RES_EST_CURRENT      (0.5)           //~10% of rated current
-#define USER_MOTOR_IND_EST_CURRENT      (-5.0)          //~10% of rated current; absolute value can be reduced if having trouble identifying a correct Ls
+#define USER_MOTOR_IND_EST_CURRENT      (-0.5)          //~10% of rated current; absolute value can be reduced if having trouble identifying a correct Ls
 #define USER_MOTOR_MAX_CURRENT          (7.5)           // peak current
 #define USER_MOTOR_FLUX_EST_FREQ_Hz     (117.0)         // ~10% of rated max speed - check excel
 #define USER_MOTOR_FREQ_LOW				(10.0)			// Hz - suggested to set to 10% of rated motor frequency
 #define USER_MOTOR_FREQ_HIGH			(100.0)			// Hz - suggested to set to 100% of rated motor frequency
 #define USER_MOTOR_FREQ_MAX				(120.0)			// Hz - suggested to set to 120% of rated motor frequency
 #define USER_MOTOR_VOLT_MIN				(3.0)			// Volt - suggested to set to 15% of rated motor voltage
-#define USER_MOTOR_VOLT_MAX				(12.0)			// Volt - suggested to set to 100% of rated motor voltage
+#define USER_MOTOR_VOLT_MAX				(18.0)			// Volt - suggested to set to 100% of rated motor voltage
 //----------------- end Suppo_B2208_17 ------------------
 
 #elif (USER_MOTOR == small_hobby)
